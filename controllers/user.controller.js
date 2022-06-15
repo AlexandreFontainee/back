@@ -7,7 +7,8 @@ exports.signup = (req, res, next) => {
       (hash) => {
         const user = new User({
           email: req.body.email,
-          password: hash
+          password: hash,
+          name: req.body.name
         });
         user.save().then(
           () => {
@@ -16,7 +17,7 @@ exports.signup = (req, res, next) => {
             });
           }
         ).catch(
-          (error) => {
+          (error) => {  console.log(error)
             res.status(500).json({                                      
               error: error
             });

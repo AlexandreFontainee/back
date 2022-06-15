@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const mongoose = require('mongoose');
-app.use(cors({origin: "http://192.168.1.20:8080"}));
+app.use(cors({origin: "http://localhost:8080"}));
 app.use(express.json());
 
 
@@ -26,9 +26,9 @@ mongoose.connect(logMongoDb,
 // routes
 const userRoute = require('./routes/user.routes');
 
-app.use('api/authJwt', userRoute);
+app.use('/api/authJwt', userRoute);
 
-// port du back qui tourne sur le port 8080
+// port du back qui tourne sur le port 5000
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Le serveur tourne sur le port ${PORT}.`);
