@@ -25,8 +25,10 @@ mongoose.connect(logMongoDb,
 
 // routes
 const userRoute = require('./routes/user.routes');
+const messageRoute = require('./routes/message.routes')
 
 app.use('/api/authJwt', userRoute);
+app.use('/api/message', messageRoute);
 
 // port du back qui tourne sur le port 5000
 const PORT = process.env.PORT || 5000;
