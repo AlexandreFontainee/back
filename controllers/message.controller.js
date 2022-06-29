@@ -16,3 +16,8 @@ exports.createMessage = (req, res, next) => {
 
 // le read
 
+exports.getAllMessages =(req,res) => {
+    Message.find()
+    .then((message) => res.status(200).json(message))
+    .catch((error) => res.status(400).json({ error }));
+}
