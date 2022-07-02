@@ -73,7 +73,7 @@ exports.login = (req, res, next) => {
 
 exports.findUser = (req, res, next) => {
 
-  User.findOne({ id: req.body.id }).then(
+  User.findOne({ _id: req.params.id }).then(
     (user) => {
       if (!user) {
         return res.status(401).json({
@@ -93,11 +93,36 @@ exports.findUser = (req, res, next) => {
 exports.deleteUser = (req, res, next) => {
 
   User.findOne({ _id: req.params.id })
-    .then(() => {
-      // rajouter un si il ne trouve pas 
+    .then((user) => {
+      if (!user) {
+        return res.status(401).json({
+          error: new Error('Utilsateur non trouvé')
+        });
+      }
       User.deleteOne({ _id: req.params.id })
         .then(res.status(200).json({ message: "utilisateur supprimé" }))
         .catch((error) => res.status(400).json({ error }));
     })
     .catch((error) => res.status(500).json({ error }));
 };
+
+exports.UpdateName = (req, res, next) => {
+
+const UserObj = req.params.id
+
+  User.updateOne({ _id: req.params.id }, { ...UserObj, name: req.body.name, email: req.body.email })
+    .then(res.status(200).json({ message: "nom modifiée" }))
+    .catch((error) => res.status(400).json({ error }));
+    console.log(UserObj)
+}
+
+exports.UpdateEmail = (req, res, next) => {
+
+  const UserObj = req.params.email
+  
+    User.updateOne({ _id: req.params.id }, { ...UserObj, email: req.body.email })
+      .then(res.status(200).json({ message: "email modifiée" }))
+      .catch((error) => res.status(400).json({ error }));
+      console.log(UserObj)
+  }
+
