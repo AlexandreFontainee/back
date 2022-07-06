@@ -12,6 +12,9 @@ const userSchema = mongoose.Schema({
     },
     password: {
         type: String, required: [true, "veuillez saisir un mot de passe"]
+    },
+    imageUrl:{
+        type: String,
     }
 });
 

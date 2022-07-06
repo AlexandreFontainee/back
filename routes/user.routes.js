@@ -10,6 +10,7 @@ router.get("/user/:id", userControll.findUser);
 router.delete("/delete/:id", userControll.deleteUser);
 router.put("/update/:id", userControll.UpdateName);
 router.put("/update/:id", userControll.UpdateEmail);
+router.put("/update/:id", userControll.UpdatePicture);
 
 
 module.exports = router; 

@@ -126,3 +126,12 @@ exports.UpdateEmail = (req, res, next) => {
       console.log(UserObj)
   }
 
+  exports.UpdatePicture = (req, res, next) => {
+
+    const UserObj = req.params.imageUrl
+    
+      User.updateOne({ _id: req.params.id }, { ...UserObj, imageUrl: req.body.imageUrl })
+        .then(res.status(200).json({ message: "image modifiée" }))
+        .catch((error) => res.status(400).json({ error }));
+        console.log(UserObj)
+    }
