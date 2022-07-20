@@ -1,12 +1,15 @@
 const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
-    userId:{
+    messageId:{
         type: String, 
     },
-    message:{
+    message_content:{
         type: String, 
     },
+    title:{
+        type: String
+    }
    // image:{
      //   type: image 
     //}
