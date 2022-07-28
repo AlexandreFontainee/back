@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
 
 const postSchema = mongoose.Schema({
-    messageId:{
+
+    UserId:{
         type: String, 
     },
     message_content:{
@@ -9,10 +10,10 @@ const postSchema = mongoose.Schema({
     },
     title:{
         type: String
+    },
+    imageUrl:{
+        type: String 
     }
-   // image:{
-     //   type: image 
-    //}
 });
 
 module.exports = mongoose.model('message', postSchema);

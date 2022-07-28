@@ -8,13 +8,16 @@ const userSchema = mongoose.Schema({
       type: String, required: true
     },
     email: {
-        type : String , required: true, unique: true
+        type : String , required: true, unique: true,
     },
     password: {
         type: String, required: [true, "veuillez saisir un mot de passe"]
     },
-    imageUrl:{
+    userImageUrl:{
         type: String,
+    },
+    IsAdmin:{
+       type: false
     }
 });
 

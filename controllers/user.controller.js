@@ -1,6 +1,5 @@
 const bcrypt = require('bcrypt');
 const User = require('../models/user.model');
-const db = require('mongoose');
 const jwt = require('jsonwebtoken');
 
 exports.signup = (req, res, next) => {
@@ -83,7 +82,8 @@ exports.findUser = (req, res, next) => {
       res.status(200).json({
         id: user.id,
         name: user.name,
-        email: user.email
+        email: user.email,
+        IsAdmin: false,
       })
     })
 
@@ -128,10 +128,14 @@ exports.UpdateEmail = (req, res, next) => {
 
   exports.UpdatePicture = (req, res, next) => {
 
-    const UserObj = req.params.imageUrl
-    
-      User.updateOne({ _id: req.params.id }, { ...UserObj, imageUrl: req.body.imageUrl })
-        .then(res.status(200).json({ message: "image modifiée" }))
+      const UserObj= req.file
+      ?{
+
+    UserimageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+
+  }: {...req.body}
+      User.updateOne({ _id: req.params.id }, { ...UserObj, userImageUrl: req.body.userImageUrl })
+        .then(res.status(200).json({ message: "photo modifiée" }))
         .catch((error) => res.status(400).json({ error }));
-        console.log(UserObj)
+        console.log(userImageUrl)
     }
