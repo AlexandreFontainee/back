@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
-
 const messageSchema = mongoose.Schema({
 
+    userId:{
+        type: String,
+        required: true,
+    },
     name:{
         type: String, unique: true
     },
@@ -14,6 +17,11 @@ const messageSchema = mongoose.Schema({
     imageUrl:{
         type: String 
     },
+    user:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "user"
+    }
+    
     
 });
 

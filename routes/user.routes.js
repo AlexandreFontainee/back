@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const userControll = require('../controllers/user.controller');
+const multer = require('../middlewares/multer-config')
 
 
 
@@ -11,7 +12,7 @@ router.get("/user/:id", userControll.findUser);
 router.delete("/delete/:id", userControll.deleteUser);
 router.put("/update/:id", userControll.UpdateName);
 router.put("/update/:id", userControll.UpdateEmail);
-router.post("/upload", userControll.UpdatePicture);
+router.put("/upload",multer, userControll.UpdatePicture);
 
 
 module.exports = router; 

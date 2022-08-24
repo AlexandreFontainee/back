@@ -1,28 +1,20 @@
 const Message = require('../models/message.model');
-const User = require('../models/user.model')
 
 
 // le create
 exports.createMessage = (req, res, next) => {
+
   const message = new Message({
 
     message_content: req.body.message_content,
     title: req.body.title,
+    userId: req.body.userId,
     name: req.body.name,
-    imageUrl: req.body.imageUrl,
-
   })
   console.log(message)
   message.save()
-  .then(()=> {
-    User.findOne({name: req.body.name}, (user)=>{
-      if(user){
-        user.messages.push(message);
-        user.save()
-      }
-    })
-  }).then(() => res.status(201).json({ message: "Publication réussie" }))
-   .catch(error => res.status(400).json({ error }))
+    .then(() => res.status(201).json({ message: "Publication réussie" }))
+    .catch(error => res.status(400).json({ error }))
 }
 
 
@@ -35,20 +27,21 @@ exports.getAllMessages = (req, res) => {
 
 
 // trouver un message
-exports.findOneMessage = (req, res, next) => {
+exports.findOneMessage = (req, res,) => {
 
   Message.findOne({ _id: req.params.id }).then(
+
     (message) => {
       if (!message) {
         return res.status(401).json({
           error: new Error('aucun message trouvé')
         });
       }
+      console.log({ _id: req.params.id });
       res.status(200).json({
-        id: message.id,
         title: message.title,
-        message: message.message_content,
-        UserId: req.body.UserId
+        message_content: message.message_content,
+        userId: message.userId
       })
     })
 

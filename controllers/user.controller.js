@@ -75,7 +75,6 @@ exports.login = (req, res, next) => {
 exports.findUser = (req, res, next) => {
 
   User.findOne({ _id: req.params.id })
-  .populate('messages')
     .then(
       (user) => {
         if (!user) {
@@ -88,7 +87,7 @@ exports.findUser = (req, res, next) => {
           name: user.name,
           email: user.email,
           IsAdmin: false,
-          messages: [],
+          userImageUrl: user.userImageUrl
         })
         console.log(user)
       })
@@ -137,11 +136,10 @@ exports.UpdatePicture = (req, res, next) => {
   const UserObj = req.file
     ? {
 
-      UserimageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+      userImageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 
     } : { ...req.body }
   User.updateOne({ _id: req.params.id }, { ...UserObj, userImageUrl: req.body.userImageUrl })
     .then(res.status(200).json({ message: "photo modifiée" }))
-    .catch((error) => res.status(400).json({ error }));
-  console.log(userImageUrl)
+    .catch((error) => res.status(400).json({ error }))
 }
