@@ -10,6 +10,8 @@ exports.createMessage = (req, res, next) => {
     title: req.body.title,
     userId: req.body.userId,
     name: req.body.name,
+    imageUrl: req.body.imageUrl,
+    
   })
   console.log(message)
   message.save()
