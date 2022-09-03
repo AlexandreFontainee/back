@@ -115,7 +115,7 @@ exports.UpdateName = (req, res, next) => {
 
   const UserObj = req.params.id
 
-  User.updateOne({ _id: req.params.id }, { ...UserObj, name: req.body.name, email: req.body.email })
+  User.updateOne({ _id: req.params.id }, { name: req.body.name, })
     .then(res.status(200).json({ message: "nom modifiée" }))
     .catch((error) => res.status(400).json({ error }));
   console.log(UserObj)
@@ -132,14 +132,21 @@ exports.UpdateEmail = (req, res, next) => {
 }
 
 exports.UpdatePicture = (req, res, next) => {
-
+  console.log('UpdatePicture')
+  console.log(JSON.stringify(req.file))
+  console.log(JSON.stringify(req.params))
   const UserObj = req.file
     ? {
 
       userImageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
 
     } : { ...req.body }
-  User.updateOne({ _id: req.params.id }, { ...UserObj, userImageUrl: req.body.userImageUrl })
-    .then(res.status(200).json({ message: "photo modifiée" }))
-    .catch((error) => res.status(400).json({ error }))
+
+  console.log(JSON.stringify(UserObj));
+  User.updateOne({ _id: req.params.id }, { userImageUrl: 'couocuo' })
+    .then(() => {
+      console.log('upload ok!')
+      return res.status(200).json({ message: "photo modifiée" })
+    })
+    .catch((error) => {console.log(error); return res.status(400).json({ error })})
 }

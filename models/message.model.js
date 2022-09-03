@@ -6,7 +6,7 @@ const messageSchema = mongoose.Schema({
         required: true,
     },
     name:{
-        type: String, unique: true
+        type: String, 
     },
     message_content:{
         type: String, 
@@ -17,10 +17,6 @@ const messageSchema = mongoose.Schema({
     imageUrl:{
         type: String 
     },
-    user:{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "user"
-    }
     
     
 });

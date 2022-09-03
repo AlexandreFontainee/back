@@ -12,7 +12,7 @@ router.get("/user/:id", userControll.findUser);
 router.delete("/delete/:id", userControll.deleteUser);
 router.put("/update/:id", userControll.UpdateName);
 router.put("/update/:id", userControll.UpdateEmail);
-router.post("/upload",multer, userControll.UpdatePicture);
+router.put("/upload/:id",multer, userControll.UpdatePicture);
 
 
 module.exports = router; 

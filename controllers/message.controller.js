@@ -3,7 +3,7 @@ const Message = require('../models/message.model');
 
 // le create
 exports.createMessage = (req, res, next) => {
-
+  console.log('createMessage.name');
   const message = new Message({
 
     message_content: req.body.message_content,
@@ -15,8 +15,13 @@ exports.createMessage = (req, res, next) => {
   })
   console.log(message)
   message.save()
-    .then(() => res.status(201).json({ message: "Publication réussie" }))
-    .catch(error => res.status(400).json({ error }))
+    .then(() => {
+      return res.status(201).json({ message: "Publication réussie" })
+    })
+    .catch((error) => {
+      console.log(error)
+      return res.status(400).json({ error })
+    })
 }
 
 
