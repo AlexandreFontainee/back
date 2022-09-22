@@ -5,14 +5,17 @@ const Message = require('../models/message.model');
 exports.createMessage = (req, res, next) => {
   console.log('createMessage.name');
   const message = new Message({
-
     message_content: req.body.message_content,
     title: req.body.title,
     userId: req.body.userId,
     name: req.body.name,
-    imageUrl: req.body.imageUrl,
-    
+    messageId: req.body.messageId,
+    userImageUrl: req.body.userImageUrl
   })
+  if(req.file) {
+
+    message.imageUrl = `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
+  }
   console.log(message)
   message.save()
     .then(() => {
@@ -22,6 +25,7 @@ exports.createMessage = (req, res, next) => {
       console.log(error)
       return res.status(400).json({ error })
     })
+
 }
 
 
@@ -35,7 +39,7 @@ exports.getAllMessages = (req, res) => {
 
 // trouver un message
 exports.findOneMessage = (req, res,) => {
-
+console.log(req.params.id)
   Message.findOne({ _id: req.params.id }).then(
 
     (message) => {
@@ -55,6 +59,8 @@ exports.findOneMessage = (req, res,) => {
 }
 
 exports.deleteMessage = (req, res, next) => {
+
+  /* bien vérifier le token */ 
   Message.findOne({ _id: req.params.id }).then(
     (message) => {
       if (!message) {

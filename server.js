@@ -8,7 +8,7 @@ app.use(cors({origin: "http://localhost:8080"}));
 app.use(express.json());
 
 // gestion d'image avec multer
-app.use("/img", express.static(path.join(__dirname, "images")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 //pour parser les url
 app.use(express.urlencoded({ extended: true }));

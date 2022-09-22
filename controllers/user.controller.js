@@ -143,7 +143,7 @@ exports.UpdatePicture = (req, res, next) => {
     } : { ...req.body }
 
   console.log(JSON.stringify(UserObj));
-  User.updateOne({ _id: req.params.id }, { userImageUrl: 'couocuo' })
+  User.updateOne({ _id: req.params.id }, { ...UserObj, userImageUrl:"http://localhost:5000/images/" + req.file.filename })
     .then(() => {
       console.log('upload ok!')
       return res.status(200).json({ message: "photo modifiée" })

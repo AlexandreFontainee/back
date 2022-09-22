@@ -1,9 +1,16 @@
 const mongoose = require('mongoose');
+const { STRING } = require('sequelize');
 const messageSchema = mongoose.Schema({
 
     userId:{
         type: String,
-        required: true,
+        
+    },
+    userImageUrl: {
+        type: String
+    },
+    messageId:{
+        type: String,
     },
     name:{
         type: String, 
@@ -17,7 +24,7 @@ const messageSchema = mongoose.Schema({
     imageUrl:{
         type: String 
     },
-    
+
     
 });
 
