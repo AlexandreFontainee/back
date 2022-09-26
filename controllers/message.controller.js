@@ -73,3 +73,22 @@ exports.deleteMessage = (req, res, next) => {
         .catch((error) => res.status(400).json({ error }));
     })
 }
+
+exports.modifMessage = (req, res, next) => {
+
+  const MessageObj = req.file
+    ? {
+
+      imageUrl: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+
+    } : { ...req.body }
+
+  console.log(JSON.stringify(MessageObj));
+  User.updateOne({ _id: req.params.id }, { ...MessageObj,imageUrl:"http://localhost:5000/images/" + req.file.filename }),
+  {title: req.body.title}, {message_content: req.body.message_content}
+    .then(() => {
+      console.log('message ok!')
+      return res.status(200).json({ message: "message modifiée" })
+    })
+    .catch((error) => {console.log(error); return res.status(400).json({ error })})
+}
