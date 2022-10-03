@@ -7,9 +7,10 @@ const auth = require('../middlewares/authJwt')
 
 
 router.post('/create',auth,multer, messageControll.createMessage);
+router.post("/like/:id", auth, messageControll.likeDislike);
 router.get('/messagePosted',auth, messageControll.getAllMessages);
 router.get('/uniqueMessage/:id',auth, messageControll.findOneMessage);
-router.delete('/deleteMessage/:id',auth, messageControll.deleteMessage)
-router.put('/modif/:id', auth, messageControll.modifMessage)
+router.delete('/deleteMessage/:id',auth, messageControll.deleteMessage);
+router.put('/modif/:id', auth, messageControll.modifMessage);
 
 module.exports = router; 

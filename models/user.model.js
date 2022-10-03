@@ -25,10 +25,6 @@ const userSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    messages:[{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "message"
-    }],
 
 });
 

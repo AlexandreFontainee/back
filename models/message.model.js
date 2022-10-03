@@ -1,16 +1,11 @@
 const mongoose = require('mongoose');
-const { STRING } = require('sequelize');
 const messageSchema = mongoose.Schema({
 
     userId:{
-        type: String,
-        
+        type: String,   
     },
     userImageUrl: {
         type: String
-    },
-    messageId:{
-        type: String,
     },
     name:{
         type: String, 
@@ -24,6 +19,18 @@ const messageSchema = mongoose.Schema({
     imageUrl:{
         type: String 
     },
+    likes:{
+        type: Number
+    },
+    dislikes:{
+        type: Number
+    },
+    usersLiked:{
+        type:[String]
+    },
+    usersDisliked:{
+        type:[String]
+    }
 
     
 });
