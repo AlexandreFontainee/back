@@ -1,7 +1,6 @@
+// MON SHCEMA D'UTILISATEUR
 const mongoose = require('mongoose');
-
 const uniqueValidator = require('mongoose-unique-validator');
-
 const userSchema = mongoose.Schema({
         
     name: {
@@ -23,6 +22,7 @@ const userSchema = mongoose.Schema({
     },
     IsAdmin:{
         type: Boolean,
+        required: true,
         default: false
     },
 

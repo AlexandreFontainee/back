@@ -4,6 +4,7 @@ require('dotenv').config();
 const tokenLog = process.env.secretToken
 const jwt = require('jsonwebtoken');
 
+// post
 exports.signup = (req, res, next) => {
   bcrypt.hash(req.body.password, 10).then(
     (hash) => {
@@ -32,7 +33,7 @@ exports.signup = (req, res, next) => {
   );
 };
 
-
+// POST
 exports.login = (req, res, next) => {
   User.findOne({ email: req.body.email }).then(
     (user) => {
@@ -54,8 +55,9 @@ exports.login = (req, res, next) => {
             { expiresIn: '24h' });
           res.status(200).json({
             userId: user._id,
-            token: token
-          });
+            token: token,
+            IsAdmin: user.IsAdmin
+          });  
         }
       ).catch(
         (error) => {
@@ -74,6 +76,7 @@ exports.login = (req, res, next) => {
   );
 };
 
+// GET
 exports.findUser = (req, res, next) => {
 
   User.findOne({ _id: req.params.id })
@@ -88,15 +91,14 @@ exports.findUser = (req, res, next) => {
           id: user.id,
           name: user.name,
           email: user.email,
-          IsAdmin: false,
-          userImageUrl: user.userImageUrl
+          userImageUrl: user.userImageUrl,
+          IsAdmin: user.IsAdmin
         })
         console.log(user)
       })
-
 }
 
-
+// DELETE
 exports.deleteUser = (req, res, next) => {
 
   User.findOne({ _id: req.params.id })
@@ -113,6 +115,7 @@ exports.deleteUser = (req, res, next) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
+// UPDATE NOM 
 exports.UpdateName = (req, res, next) => {
 
   const UserObj = req.params.id
@@ -123,6 +126,7 @@ exports.UpdateName = (req, res, next) => {
   console.log(UserObj)
 }
 
+// UPADATE EMAIL
 exports.UpdateEmail = (req, res, next) => {
 
   const UserObj = req.params.email
@@ -133,10 +137,9 @@ exports.UpdateEmail = (req, res, next) => {
   console.log(UserObj)
 }
 
+// UPDATE PHOTO DE PROFILE
 exports.UpdatePicture = (req, res, next) => {
-  console.log('UpdatePicture')
-  console.log(JSON.stringify(req.file))
-  console.log(JSON.stringify(req.params))
+
   const UserObj = req.file
     ? {
 
@@ -144,7 +147,6 @@ exports.UpdatePicture = (req, res, next) => {
 
     } : { ...req.body }
 
-  console.log(JSON.stringify(UserObj));
   User.updateOne({ _id: req.params.id }, { ...UserObj, userImageUrl:"http://localhost:5000/images/" + req.file.filename })
     .then(() => {
       console.log('upload ok!')

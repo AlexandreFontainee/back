@@ -1,3 +1,5 @@
+// MON SHCEMA DE MESSAGE
+
 const mongoose = require('mongoose');
 const messageSchema = mongoose.Schema({
 
@@ -19,19 +21,6 @@ const messageSchema = mongoose.Schema({
     imageUrl:{
         type: String 
     },
-    likes:{
-        type: Number
-    },
-    dislikes:{
-        type: Number
-    },
-    usersLiked:{
-        type:[String]
-    },
-    usersDisliked:{
-        type:[String]
-    }
-
     
 });
 

@@ -1,3 +1,5 @@
+// MES ROUTES POUR LES MESSAGES
+
 const express = require('express');
 const router = express.Router();
 const multer = require("../middlewares/multer-config")
@@ -7,7 +9,6 @@ const auth = require('../middlewares/authJwt')
 
 
 router.post('/create',auth,multer, messageControll.createMessage);
-router.post("/like/:id", auth, messageControll.likeDislike);
 router.get('/messagePosted',auth, messageControll.getAllMessages);
 router.get('/uniqueMessage/:id',auth, messageControll.findOneMessage);
 router.delete('/deleteMessage/:id',auth, messageControll.deleteMessage);

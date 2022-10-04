@@ -1,3 +1,4 @@
+// MIDDLEWARE POUR LA GESTION DE MES IMAGES
 const multer = require("multer");
 
 const MIME_TYPES = {

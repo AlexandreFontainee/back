@@ -16,6 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 require('dotenv').config();
 const logMongoDb = process.env.logMongoDb;
 
+// ma connexion à la base de donnée
 mongoose.connect(logMongoDb,
 {
 	useNewUrlParser: true,
