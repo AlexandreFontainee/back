@@ -5,7 +5,11 @@ Téléchargez le back end.
 
 Une fois télchargé: 
 
-.Créez un dossier .env dans le projet
+. npm ci   
+
+* afin de récupérer nodes_modules
+
+.Créez un fichier .env dans le projet
 
 Dans ce dossier .env veuillez ajouter: 
 
