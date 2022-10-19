@@ -13,5 +13,8 @@ router.get('/messagePosted',auth, messageControll.getAllMessages);
 router.get('/uniqueMessage/:id',auth, messageControll.findOneMessage);
 router.delete('/deleteMessage/:id',auth, messageControll.deleteMessage);
 router.put('/modif/:id', auth, messageControll.modifMessage);
+router.put('/modif/image/:id', multer, messageControll.MessagePicture)
+router.post('/like/:id',  messageControll.likeDislikeSauce);
+
 
 module.exports = router; 

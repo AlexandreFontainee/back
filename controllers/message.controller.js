@@ -7,7 +7,11 @@ exports.createMessage = (req, res, next) => {
     title: req.body.title,
     userId: req.body.userId,
     name: req.body.name,
-    userImageUrl: req.body.userImageUrl
+    userImageUrl: req.body.userImageUrl,
+    likes: 0,
+    dislikes: 0,
+    usersLiked: [],
+    usersDisliked: [],
   })
   if (req.file) {
 
@@ -78,10 +82,9 @@ exports.modifMessage = (req, res, next) => {
   const newMsg = {
     _id,
     title: req.body.title,
-    message_content: req.body.message_content
+    message_content: req.body.message_content,
   }
-
-  Message.updateOne({ _id: req.params.id }, { ...newMsg })
+  Message.updateOne({ _id: req.params.id }, { ...newMsg})
     .then(() => {
       console.log('message ok!')
       return res.status(200).json({ message: "message modifiée" })
@@ -90,3 +93,81 @@ exports.modifMessage = (req, res, next) => {
 
 
 }
+
+exports.MessagePicture = (req, res, next) => {
+
+  const { id: _id } = req.params
+
+  const newMsg = {
+    _id,
+    imageUrl: req.file.filename
+  }
+  console.log(newMsg)
+  Message.updateOne({ _id: req.params.id }, { ...newMsg, imageUrl:"http://localhost:5000/images/" + req.file.filename})
+    .then(() => {
+      console.log('message ok!')
+      return res.status(200).json({ message: "message modifiée" })
+    })
+    .catch((error) => { console.log(error); return res.status(400).json({ error }) })
+
+}
+
+// like dislike 
+
+exports.likeDislikeSauce = (req, res, next) => {
+  const like = req.body.like;
+  const userId = req.body.userId;
+  const MessageId = req.params.id;
+  if (!userId) {
+    res.status(401).json({ error: "Utilisateur requis !" });
+    return;
+  }
+  
+  Message.findOne({ _id: MessageId })
+    .then((message) => {
+
+      if (like === 1) {
+        if (message.usersLiked.includes(userId) || message.usersDisliked.includes(userId)) {
+         
+          res.status(401).json({ error: "L'utilisateur a déjà liké ou disliké" });
+        } else {
+        
+          Message.updateOne({ _id: MessageId }, { $push: { usersLiked: userId }, $inc: { likes: +1 } })
+            .then(() => res.status(200).json({ message: "J'aime" }))
+            .catch((error) => res.status(400).json({ error: error.message }));
+        }
+      } else if (like === 0) {
+        if (message.usersLiked.includes(userId)) {
+
+          Message.updateOne({ _id: MessageId }, { $pull: { usersLiked: userId }, $inc: { likes: -1 } })
+            .then(() => res.status(200).json({ message: "Neutre" }))
+            .catch((error) => res.status(400).json({ error: error.message }));
+        } else if (message.usersDisliked.includes(userId)) {
+
+          Message.updateOne({ _id: MessageId }, { $pull: { usersDisliked: userId }, $inc: { dislikes: -1 } })
+            .then(() => res.status(200).json({ message: "Neutre" }))
+            .catch((error) => res.status(400).json({ error: error.message }));
+        } else {
+ 
+          res.status(401).json({ error: "Utilisateur n'a pas liké ou disliké" });
+        }
+      } else if (like === -1) {
+
+        if (message.usersLiked.includes(userId) || message.usersDisliked.includes(userId)) {
+
+          res.status(401).json({ error: "L'utilisateur a déjà liké ou disliké" });
+        } else {
+      
+          Message.updateOne({ _id: MessageId }, { $push: { usersDisliked: userId }, $inc: { dislikes: +1 } })
+            .then(() => {
+              res.status(200).json({ message: "Je n'aime pas" });
+            })
+            .catch((error) => res.status(400).json({ error: error.message }));
+        }
+      } else {
+        res.status(400).json({ error: "Like ne peut que être égale à -1, 0 ou 1" });
+      }
+    })
+    //
+    .catch((error) => res.status(404).json({ error: error.message }));
+};

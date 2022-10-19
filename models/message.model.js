@@ -21,6 +21,28 @@ const messageSchema = mongoose.Schema({
     imageUrl:{
         type: String 
     },
+
+    // like dislike
+
+    likes : {
+        type : Number,
+        required : true
+    },
+
+    dislikes : {
+        type : Number,
+        required : true
+    },
+
+    usersLiked : {
+        type : [String],
+        required : true
+    },
+
+    usersDisliked : {
+        type : [String],
+        required : true
+    },
     
 });
 
